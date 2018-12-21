@@ -1,5 +1,5 @@
 {
-  "name": "gatsby-awesome-pagination",
+  "name": "@arcblock/gatsby-awesome-pagination",
   "version": "0.3.3",
   "description": "An opinionated, more awesome approach to pagination in Gatsby",
   "files": [

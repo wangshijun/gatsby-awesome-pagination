@@ -24,7 +24,8 @@ type PaginateOpts = {
   itemsPerFirstPage?: number,
   pathPrefix: PathPrefix,
   component: string,
-  context?: {}
+  context?: {},
+  onContext?: () => {}
 };
 export const paginate = (opts: PaginateOpts): void => {
   const {
@@ -34,7 +35,8 @@ export const paginate = (opts: PaginateOpts): void => {
     itemsPerFirstPage,
     pathPrefix,
     component,
-    context
+    context,
+    onContext
   } = opts;
 
   // How many items do we have in total? We use `items.length` here. In fact, we
@@ -72,6 +74,15 @@ export const paginate = (opts: PaginateOpts): void => {
       numberOfPages
     );
 
+    // allow user to decorate context
+    const extra = typeof onContext === 'function' ? onContext({
+        path,
+        pageNumber,
+        numberOfPages,
+        previousPagePath,
+        nextPagePath,
+    }) : {};
+
     // Call `createPage()` for this paginated page
     createPage({
       path,
@@ -86,7 +97,7 @@ export const paginate = (opts: PaginateOpts): void => {
         numberOfPages,
         previousPagePath,
         nextPagePath
-      })
+      }, extra)
     });
   })(numberOfPages);
 };
